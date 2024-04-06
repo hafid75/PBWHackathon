@@ -1,0 +1,26 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 80px;
+    background-color: #FFF;
+  }
+  
+  .leftContainer h1 {
+    color: #000;
+  }
+  
+  .rightContainer button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+  
+  .rightContainer button h2 {
+    margin: 0;
+    color: #000;
+  }
