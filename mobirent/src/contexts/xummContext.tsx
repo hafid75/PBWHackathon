@@ -1,13 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import * as dotenv from "dotenv";
+import { xrpToDrops } from 'xrpl';
 import { Xumm } from 'xumm';
-
-dotenv.config();
-
-const API_KEY = process.env.XUMM_API_KEY;
-const API_SECRET = process.env.XUMM_API_SECRET;
-
-console.log("api key:", process.env);
 
 interface xummContextType {
     xummClient: Xumm | undefined;
@@ -26,17 +19,19 @@ export const useXUMM = () => {
     return context;
 };
 
-
 export const XUMMProvider: ({ children }: any) => React.JSX.Element = ({ children }: any) => {
     const [xummClient, setXummClient] = useState<Xumm | undefined>(undefined);
     const [userWallet, setUserWallet] = useState<string | undefined>(undefined);
 
     const connectWallet = async () => {
+        console.log("try to connect a wallet");
         try {
+            console.log("enter into try");
             const auth = await xummClient?.authorize();
-            const userWalletAddress = await xummClient?.user?.account;
+            console.log("tryed to autorize with the value:", auth);
+            const userWalletAddress = auth ? await xummClient?.user?.account : undefined;
             userWalletAddress !== undefined && setUserWallet(userWalletAddress);
-            return (userWalletAddress !== undefined ? true : false);
+            return (userWalletAddress !== undefined && userWalletAddress?.length > 0 ? true : false);
         } catch (error) {
             console.log("error into connect wallet:", error);
             return (undefined);
@@ -54,6 +49,18 @@ export const XUMMProvider: ({ children }: any) => React.JSX.Element = ({ childre
         }
     }
 
+    const makePayment = async () => {
+        try {
+            const tsx = await xummClient?.payload?.create({
+                TransactionType: 'Payment',
+                Destination: 'rfHn6cB5mmqZ6fHZ4fdemCDSxqLTijgMwo',
+                Amount: xrpToDrops(10)
+            })
+        } catch (error) {
+            console.log("error during transaction:", error);
+        }
+    }
+
     useEffect(() => {
         if (xummClient !== undefined && xummClient?.user) {
             console.log("wallet connected:", xummClient?.user);
@@ -61,7 +68,7 @@ export const XUMMProvider: ({ children }: any) => React.JSX.Element = ({ childre
             console.log("wallet not connected");
         }
         return () => {
-            if (xummClient) {
+            if (xummClient !== undefined) {
                 disconnectWallet();
                 console.log("client Disconnected");
             } else {
@@ -72,14 +79,11 @@ export const XUMMProvider: ({ children }: any) => React.JSX.Element = ({ childre
 
     useEffect(() => {
         const initializeXUMMClient = async () => {
-            console.log("API KEY:", API_KEY);
-            const client = new Xumm(API_KEY, API_SECRET);
+            const client = new Xumm("5c57763d-f552-45a0-87f2-5ec47503f511", "1702803d-2b0f-45e2-b45c-edb36108abac");
             client && setXummClient(client);
-            console.log("client initalize");
         }
 
         initializeXUMMClient();
-        console.log("env:", process.env);
     }, []);
 
     return (
