@@ -1,12 +1,10 @@
 import { useRouter } from "next/router";
 import style from './style.module.css';
+import { useXUMM } from "@/contexts/xummContext";
 
 export default function NavBar() {
     const router = useRouter();
-
-    const handleSignUp = () => {
-        //open the sign up pop 
-    }
+    const { userWallet, connectWallet, disconnectWallet } = useXUMM();
 
     return (
         <div className={style.navbar}>
@@ -17,7 +15,9 @@ export default function NavBar() {
                 <button onClick={() => router.push('/Marketplace')}><h2>Marketplace</h2></button>
                 <button onClick={() => router.push('/Pro')}><h2>Professional</h2></button>
                 <button onClick={() => router.push('/About')}><h2>About us</h2></button>
-                <button onClick={handleSignUp}><h2>SignUp</h2></button>
+                {userWallet && userWallet?.length > 0 ?
+                    <button onClick={() => disconnectWallet()}><h2>{userWallet?.slice(0, 5) + '...' + userWallet?.slice(userWallet?.length - 6, userWallet?.length)}</h2></button> :
+                    <button onClick={() => connectWallet()}><h2>SignUp</h2></button>}
             </div>
         </div>
     );
