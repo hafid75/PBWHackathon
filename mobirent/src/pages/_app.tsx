@@ -1,14 +1,14 @@
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
-import { XRPLProvider } from "@/contexts/xrpContext";
+import { XUMMProvider } from "@/contexts/xummContext";
 import Home from ".";
 
 export default function App() {
   const router = useRouter();
 
   return (
-    <XRPLProvider>
+    <XUMMProvider>
         {router.pathname === '/' && <Home />}
-    </XRPLProvider>
+    </XUMMProvider>
   );
 }
