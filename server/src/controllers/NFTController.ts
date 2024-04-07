@@ -5,7 +5,7 @@ import NFTService from "../services/NFTService"
 import { NFTDatasDto, NFTDatasSchema } from "../dtos/nft-models.dto"
 import { ResponseDto } from "../dtos/response.dto"
 import { UploadedFile } from "express-fileupload"
-import MongoService from "src/services/MongoService"
+import MongoService from "../services/MongoService"
 
 export default class NFTController {
   nftService: NFTService
@@ -38,6 +38,7 @@ export default class NFTController {
     if (response.error){
       return _responseBuilder(response, res)
     }
+    const nftUri = response.data!.nftUri 
     return _responseBuilder(await this.mongoService.addNftUri(response.data!.nftUri), res)
   }
 }

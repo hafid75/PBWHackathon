@@ -74,13 +74,13 @@ export default class NFTService {
     }
   }
 
-  async mintNFT(NFTDatas: NFTDatasDto): Promise<ResponseDto<string | {nftUri: string}>> {
+  async mintNFT(NFTDatas: NFTDatasDto): Promise<ResponseDto<{nftUri: string}>> {
     try {
       const pinFileRes = await this.pinToIPFS(NFTDatas)
 
       // error handling, if pinata is sending an error
       if (pinFileRes.error) {
-        return pinFileRes
+        return ResponseDto.ErrorResponse(pinFileRes.status!)
       }
 
       const nftMintTxn: NFTokenMint = {

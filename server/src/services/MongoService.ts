@@ -6,10 +6,12 @@ import { ApplicationDataDto, PresaleDataDto } from "../dtos/mongo-models.dto"
 export default class MongoService {
   applicationsCollection: Collection
   presalesCollection: Collection
+  nftsUriCollection: Collection
 
   constructor() {
     this.applicationsCollection = mongoClient.db("mobirent").collection("applications")
     this.presalesCollection = mongoClient.db("mobirent").collection("presales")
+    this.nftsUriCollection = mongoClient.db("mobirent").collection("nft-uris")
   }
 
   async addNewApplication(datas: Omit<ApplicationDataDto, "status">): Promise<ResponseDto<string>> {
@@ -103,11 +105,11 @@ export default class MongoService {
 
   async addNftUri(nftUri: string): Promise<ResponseDto<string>> {
     try {
-      const exists = await this.applicationsCollection.find({ nftUri }).toArray()
+      const exists = await this.nftsUriCollection.find({ nftUri }).toArray()
       if (exists.length !== 0) {
         return ResponseDto.ErrorResponse("ERROR : NFT URI ALREADY IN MONGO-DB")
       }
-      const res = await this.applicationsCollection.insertOne({ nftUri })
+      const res = await this.nftsUriCollection.insertOne({ nftUri })
       if (res.acknowledged) {
         return ResponseDto.SuccessResponse("NFT URI INSERTED INTO MONGO-DB WITH SUCCESS")
       }
@@ -116,6 +118,19 @@ export default class MongoService {
       return ResponseDto.ErrorResponse(`ERROR : ${err.toString()}`)
     }
   }
+
+  // async getAllNftUris(): Promise<ResponseDto<Document[]>> {
+  //   try {
+  //     const records = await this.nftsUriCollection
+  //       .toArray()
+  //     if (!records.length) {
+  //       return ResponseDto.ErrorResponse("NO PENDING APPLICATIONS")
+  //     }
+  //     return ResponseDto.SuccessResponse("SUCCESSFULLY FETCHED ONGOING REGISTRATIONS", records)
+  //   } catch (err: any) {
+  //     return ResponseDto.ErrorResponse(`ERROR : ${err.toString()}`)
+  //   }
+  // }
 
   async addNewPresale(presaleData: PresaleDataDto): Promise<ResponseDto<string>> {
     try {
