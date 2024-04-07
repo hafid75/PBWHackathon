@@ -33,12 +33,16 @@
 }
 
 .signBtn {
-  background-color: #000;
+  background-color: #091C35;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding: 0.5rem 1rem;
   border: 3px solid #FFF;
   width:300px;
+  border-radius: 20px;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 100px;
+  padding: 20px 0px 20px 0px;
 }
 
 .signBtn:hover {
@@ -49,8 +53,11 @@
 
 .homeTitle {
   color: #000;
+  font-family: 'Roboto', sans-serif;
+  font-size: 4em;
 }
 
 .homeDescription {
   color: #000;
+  font-family: 'Roboto', sans-serif;
 }

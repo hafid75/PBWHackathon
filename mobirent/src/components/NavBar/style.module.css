@@ -1,26 +1,52 @@
 .navbar {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    height: 80px;
-    background-color: #FFF;
-  }
-  
-  .leftContainer h1 {
-    color: #000;
-  }
-  
-  .rightContainer button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    margin-left: 20px;
-  }
-  
-  .rightContainer button h2 {
-    margin: 0;
-    color: #000;
-  }
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 80px;
+  background-color: #FFF;
+}
+
+.leftContainer h1 {
+  color: #000;
+}
+
+.btnContainer {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.btnText {
+  margin: 0;
+  color: #000;
+  font-family: 'Roboto', sans-serif;
+}
+
+.signinBtn {
+  background-color: #FFF;
+  padding: 10px;
+  margin-left: 20px;
+  border: 3px solid #091C35;
+  border-radius: 10px;
+}
+
+.signinBtn:hover {
+  background-color: #091C35;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid #000;
+  color: #091C35;
+}
+
+.signinText {
+  color: #000;
+  font-family: 'Roboto', sans-serif;
+}
+
+.signinBtn:hover .signinText {
+  color: #FFF;
+}

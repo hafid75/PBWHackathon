@@ -1,0 +1,52 @@
+.container {
+    width: 500px;
+    height: 700px;
+    border: 3px solid #091C35;
+    padding: 10px;
+}
+
+.FleetImage {
+    width: 100%;
+    border: 1px solid #000;
+}
+
+.fleetParams {
+    color: #000;
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dataContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.InvestText {
+    font-family: 'Roboto', sans-serif;
+    color: #091C35;
+}
+
+.InvestBtn {
+    background-color: #FFF;
+    padding: 10px;
+    margin-left: 20px;
+    border: 3px solid #091C35;
+    border-radius: 10px;
+    margin-top: 40px;
+    width: 300px;
+  }
+  
+  .InvestBtn:hover {
+    background-color: #091C35;
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid #000;
+    color: #091C35;
+  }
+
+  .InvestBtn:hover .InvestText {
+    color: #FFF;
+  }

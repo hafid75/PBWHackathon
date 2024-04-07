@@ -10,9 +10,10 @@ type FormFieldData = {
   nftImage: File | undefined,
 }
 
-
 export default function Professional() {
   const { mintNFT } = useAxios();
+  const [isMinting, setIsMinting] = useState<boolean>(false);
+  const [response, setResponse] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<FormFieldData>({
     companyName: "",
     KBIS: 0,
@@ -29,7 +30,13 @@ export default function Professional() {
   };
 
   const handleSubmit = async () => {
-    isFormValid(formData) && formData?.nftImage !== undefined && mintNFT(formData?.companyName, formData?.KBIS, formData?.minimumProfit, formData?.nftImage);
+    setIsMinting(true);
+    isFormValid(formData);
+    if (formData?.nftImage !== undefined) {
+      const res = await mintNFT(formData?.companyName, formData?.KBIS, formData?.minimumProfit, formData?.nftImage);
+      setResponse(res?.status);
+    }
+    setIsMinting(false);
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,11 +47,16 @@ export default function Professional() {
     }
   };
 
-
   return (
     <div className={styles.container}>
       <NavBar />
       <div className={styles.formContainer}>
+        <h1 className={styles.title}>Submit your Fleet</h1>
+        <h2 className={styles.desc}>Become a partner !</h2>
+        <h2 className={styles.desc}>Build your fleet, finance yourself, and earn rewards.
+          Join the new generation of digital mobility agents
+          boost your income with MobiRent referrals.
+          To get started, simply fill out this form!</h2>
 
         <div className={styles.formGroup}>
           <label htmlFor="images">NFT Image</label>
@@ -60,6 +72,7 @@ export default function Professional() {
           <label htmlFor="title">Company Name</label>
           <input
             type="text"
+            placeholder="Enter you company name..."
             value={formData.companyName}
             onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
           />
@@ -69,7 +82,7 @@ export default function Professional() {
           <label htmlFor="price">KBIS number</label>
           <input
             type="number"
-            step="0.01"
+            placeholder="Enter your kbis number..."
             value={formData.KBIS}
             onChange={(e) => setFormData({ ...formData, KBIS: parseFloat(e.target.value) })}
           />
@@ -79,15 +92,21 @@ export default function Professional() {
           <label htmlFor="price">Minimum profit</label>
           <input
             type="number"
-            step="0.01"
+            min="0"
+            max="100"
+            placeholder="Enter the minimum profit..."
             value={formData.minimumProfit}
             onChange={(e) => setFormData({ ...formData, minimumProfit: parseFloat(e.target.value) })}
           />
         </div>
-        
-        <div className={styles.buttonGroup}>
-          <button onClick={async () => await handleSubmit()}>Submit</button>
-        </div>
+
+        {!isMinting ?
+          <div className={styles.buttonGroup}>
+            <button onClick={async () => await handleSubmit()} className={styles.mintBtn}>Submit</button>
+          </div>
+          : <p className={styles.miningText}>Wait, you are mining your nft...</p>}
+
+        {response !== undefined && <p className={styles.miningText}>{response}</p>}
       </div>
     </div>
   );

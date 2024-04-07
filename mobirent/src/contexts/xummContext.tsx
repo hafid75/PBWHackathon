@@ -7,6 +7,7 @@ interface xummContextType {
     userWallet: string | undefined;
     connectWallet: () => Promise<boolean | undefined>;
     disconnectWallet: () => Promise<null>;
+    setUserWallet: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const XUMMContext = createContext<xummContextType | undefined>(undefined);
@@ -87,7 +88,7 @@ export const XUMMProvider: ({ children }: any) => React.JSX.Element = ({ childre
     }, []);
 
     return (
-        <XUMMContext.Provider value={{ xummClient, connectWallet, disconnectWallet, userWallet }}>
+        <XUMMContext.Provider value={{ xummClient, connectWallet, disconnectWallet, userWallet, setUserWallet }}>
             {children}
         </XUMMContext.Provider>
     );
