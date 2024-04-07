@@ -24,6 +24,11 @@ export default class NFTController {
         return await this.mintNFT(req, res)
       }
     )
+
+    this.expressServer.get("/getAllNftsUri", async (req: Request, res: Response) => {
+      const response = await this.mongoService.getAllNftUris()
+      return _responseBuilder(response, res)
+    })
   }
 
   private async mintNFT(req: Request, res: Response): Promise<Response> {
