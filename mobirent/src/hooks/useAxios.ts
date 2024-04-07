@@ -20,6 +20,16 @@ export const useAxios = () => {
         }
     }
 
+    const getNFTList = async () => {
+        try {
+            const res = await axios.get("http://localhost:8080/mintNFT");
+            return(res?.data);
+        } catch (error) {
+            console.log("error from mintNFT:", error);
+        }
+    }
+
+
     return {
         mintNFT,
     };
