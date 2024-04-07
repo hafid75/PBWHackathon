@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  namespace: hackathonParis
+data:
+  # Agrega las configuraciones específicas de tu app aquí.
+  # Ejemplo:
+  # DATABASE_URL: mongodb://mongodb-service:27017/
